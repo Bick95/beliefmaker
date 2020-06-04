@@ -151,14 +151,14 @@ header {
   padding: 25px 20px 40px 20px;
   margin: 0;
   position: fixed;
-  top: 99;
+  top: 20;
   left:0;
   right:0;
   width: 100%;
   text-align: center;
   background: url(../images/background.png) #4276b6;
   box-shadow: 1px 0px 2px rgba(0,0,0,.75);
-  z-index:199;
+  z-index:119;
   -webkit-font-smoothing:antialiased;
   min-height: 76px;
 
@@ -183,7 +183,7 @@ header {
 }
 
 #banner {
-  z-index: 200;
+  z-index: 120;
   left:0;
   right:50%;
   height: 50px;
