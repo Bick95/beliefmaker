@@ -388,6 +388,9 @@ footer {
     margin:0;
   }
   
+  #navi{
+  }
+  
   nav2{
     display: none;
   }
@@ -486,10 +489,10 @@ footer {
 }
 
 @media print, screen and (max-width: 480px) {
-  body {
+  #navi{
   }
   
-  #navi{
+  body {
   }
   
   header{
@@ -525,6 +528,9 @@ footer {
 }
 
 @media print, screen and (max-height: 680px) {
+  
+  #navi{
+  }
 
   footer {
     text-align: center;
@@ -537,6 +543,10 @@ footer {
 }
 
 @media print, screen and (max-height: 480px) {
+  
+  #navi{
+  }
+
   nav2 {
     display: none;
   }
