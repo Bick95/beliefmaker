@@ -1,7 +1,7 @@
 ---
 title: References
 layout: default
-filename: references
+filename: refs
 --- 
 # References
 
