@@ -388,9 +388,6 @@ footer {
     margin:56px auto;
   }
   
-  #navi{
-  }
-  
   nav2{
     display: none;
   }
@@ -445,9 +442,6 @@ footer {
     word-wrap:break-word;
   }
   
-  #navi{
-  }
-  
   header {
     padding:20px 20px;
     margin: 0;
@@ -489,8 +483,6 @@ footer {
 }
 
 @media print, screen and (max-width: 480px) {
-  #navi{
-  }
   
   body {
   }
@@ -528,9 +520,6 @@ footer {
 }
 
 @media print, screen and (max-height: 680px) {
-  
-  #navi{
-  }
 
   footer {
     text-align: center;
@@ -543,9 +532,6 @@ footer {
 }
 
 @media print, screen and (max-height: 480px) {
-  
-  #navi{
-  }
 
   nav2 {
     display: none;
