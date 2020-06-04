@@ -23,9 +23,12 @@
 
       <div id="banner">
         <span id="logo"></span>
-
-        <a href="{{ site.github.repository_url }}" class="button fork"><strong>View On GitHub</strong></a>
-        <a href="{{ https://bick95.pythonanywhere.com/ }}" class="button fork"><strong>Explore beliefmaker</strong></a>
+        <div class="main_buttons">
+          <ul>
+            <li><a href="{{ site.github.repository_url }}" class="button fork"><strong>View On GitHub</strong></a></li>
+            <li><a href="{{ https://bick95.pythonanywhere.com/ }}" class="button fork"><strong>Explore beliefmaker</strong></a></li>
+          </ul>
+        </div>
         {% if site.show_downloads %}
           <div class="downloads">
             <span>Downloads:</span>
