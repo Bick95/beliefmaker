@@ -42,11 +42,9 @@
                       Documentation
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <ul>
                         {% for page in site.pages %}
-                            <li><a class="dropdown-item" href="{{ page.filename }}">{{ page.title }}</a></li>
+                            <a class="dropdown-item" href="{{ page.filename }}">{{ page.title }}</a>
                         {% endfor %}
-                      </ul>
                     </div>
                   </li>
                 
