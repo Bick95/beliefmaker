@@ -29,18 +29,15 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a class="nav-link" href="https://bick95.pythonanywhere.com/">Solver</a>
-          </li>
-          <!-- Dropdown -->
+          </li><!-- Dropdown -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Documentation
-            </a>
+            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Documentation</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="https://bick95.github.io/beliefmaker/">Introduction</a>
               <div class="dropdown-divider"></div>
               {% for page in site.pages %}
                 {% if page.filename != "index" %}
-                  <a class="dropdown-item" href="{{ page.filename }}">{{ page.title }}</a>
+                  <a class="dropdown-item" href="{{ page.filename }}">{{page.title}}</a>
                 {% endif %}
               {% endfor %}
             </div>
