@@ -299,7 +299,7 @@ small {
   font-size:12px;
 }
 
-nav {
+nav2 {
   width: 230px;
   position: fixed;
   top: 220px;
@@ -371,7 +371,7 @@ footer {
     margin:0;
   }
 
-  nav{
+  nav2{
     display: none;
   }
 
@@ -514,7 +514,7 @@ footer {
 }
 
 @media print, screen and (max-height: 480px) {
-  nav {
+  nav2 {
     display: none;
   }
 
