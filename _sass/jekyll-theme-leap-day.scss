@@ -156,7 +156,7 @@ dt {
   width: 100%;
   z-index:200;
   -webkit-font-smoothing:antialiased;
-  min-height: 20px;
+  min-height: 56px;
   
   h1 {
     color: #f3f3f3;
@@ -387,7 +387,7 @@ footer {
     width:auto;
     margin:0;
   }
-
+  
   nav2{
     display: none;
   }
@@ -441,7 +441,10 @@ footer {
   body {
     word-wrap:break-word;
   }
-
+  
+  #navi{
+  }
+  
   header {
     padding:20px 20px;
     margin: 0;
@@ -485,7 +488,10 @@ footer {
 @media print, screen and (max-width: 480px) {
   body {
   }
-
+  
+  #navi{
+  }
+  
   header{
     position: relative;
     padding: 5px 0px;
