@@ -15,7 +15,27 @@
 
   </head>
   <body>
-
+      <!-- Nav bar -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">beliefmaker</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Solver<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://bick95.github.io/beliefmaker/" target="_blank">Documentation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://en.wikipedia.org/wiki/Epistemic_modal_logic" target="_blank">Ask Wikipedia about KD45</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
       <header>
         <h1>{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
         <p>{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
@@ -23,12 +43,7 @@
 
       <div id="banner">
         <span id="logo"></span>
-        <div class="main_buttons">
-          <span>Go to:</span>
-          <ul>
-            <li><a href="{{ site.github.repository_url }}" class="button fork"><strong>View On GitHub</strong></a></li>
-            <li><a href="{{ https://bick95.pythonanywhere.com/ }}" class="button fork"><strong>Explore beliefmaker</strong></a></li>
-          </ul>
+        <li><a href="{{ site.github.repository_url }}" class="button fork"><strong>View On GitHub</strong></a></li>
         </div>
         {% if site.show_downloads %}
           <div class="downloads">
