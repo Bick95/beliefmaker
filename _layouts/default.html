@@ -35,18 +35,9 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="https://bick95.github.io/beliefmaker/">Introduction</a>
               <div class="dropdown-divider"></div>
-              {% for page in site.pages %}
-                {% if page.filename == "index" %}
-                  {% continue %}
-                {% endif %}
-                <a class="dropdown-item" href="{{ page.filename }}">{{ page.title }}</a>
-              {% endfor %}
-
-              {% for page in site.pages %}
-                {% if page.filename != "index" %}
-                  <a class="dropdown-item" href="{{ page.filename }}">{{ page.title }}</a>
-                {% endif %}
-              {% endfor %}
+              <a class="dropdown-item" href="https://bick95.github.io/beliefmaker/kd45_and_conspiracy_theories">KD45 and Conspiracy Theories</a>
+              <a class="dropdown-item" href="https://bick95.github.io/beliefmaker/technical_report">Technical Report</a>
+              <a class="dropdown-item" href="https://bick95.github.io/beliefmaker/logic_implementation">Logic Implementation</a>
             </div>
           </li>
           <li class="nav-item">
