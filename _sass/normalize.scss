@@ -16,7 +16,7 @@ figure,
 footer,
 header,
 hgroup,
-nav,
+nav2,
 section,
 summary {
     display: block;
@@ -291,8 +291,8 @@ ul {
  * Corrects list images handled incorrectly in IE7
  */
 
-nav ul,
-nav ol {
+nav2 ul,
+nav2 ol {
     list-style: none;
     list-style-image: none;
 }
