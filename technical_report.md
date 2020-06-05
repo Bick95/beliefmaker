@@ -9,7 +9,7 @@ As described in the [introduction](https://bick95.github.io/beliefmaker/), an [o
 Implementation-wise, this project consists of a composition of multiple integrated parts. These are presented in the following subsections. 
 All code has been developed using Python 3.
 
-## Kripke model & Logic engine
+## Kripke Model & Logic Engine
 First, a class for representing Kripke models has been created. Then, an algorithm has been designed which determines how to establish common belief of a certain fact, as queried by the user, in the real world by removing the least number of agents from the provided model. For inference to be possible, both the provided model and a queried formula, consisting of a single atomic proposition or a more complex formula alternatively, must be valid. To ensure this, a mechanism has been implemented that checks the validity of a model and a queried formula before starting the inference. The implementation is described on a [separate page](https://bick95.github.io/beliefmaker/implementation_logic).
 
 ## Project Website

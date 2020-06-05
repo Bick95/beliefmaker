@@ -7,9 +7,9 @@ filename: index
 
 ### Foreword
 
-**This is the Project Site for Final Project in Logical Aspects of Multi-Agent Systems (LAMAS@[UG](https://www.rug.nl/){:target="_blank"}) in 2019/2020.**
+**This is the website for the final project for the course Logical Aspects of Multi-Agent Systems (LAMAS@[UG](https://www.rug.nl/){:target="_blank"}) in 2019/2020.**
 
-This website contains the documentation accompanying the [online tool](http://bick95.pythonanywhere.com/) developed as the final project for the LAMAS course.
+It contains the documentation accompanying the [online tool](http://bick95.pythonanywhere.com/) developed as the final project for the LAMAS course.
 
 ## Introduction 
 
