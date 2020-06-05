@@ -15,6 +15,4 @@ O’Connor, C., &amp; Weatherall, J. O. (2020). Why False Claims About COVID-19 
 Räikkä, J. (2009). On Political Conspiracy Theories. *Journal of Political Philosophy*, *17*, 2, 185-
 201.
 
-Schwitzgebel, E. (2009). Belief. *The Stanford Encyclopedia of Philosophy* (Fall 2019 Edition), E.
-
-N. Zalta (ed.). https://plato.stanford.edu/archives/fall2019/entries/belief/
+Schwitzgebel, E. (2009). Belief. *The Stanford Encyclopedia of Philosophy* (Fall 2019 Edition), E. N. Zalta (ed.). https://plato.stanford.edu/archives/fall2019/entries/belief/
