@@ -21,7 +21,7 @@ $(function() {
   });
 
   $("nav2 ul li").on("click", "a", function(event) {
-    var position = $($(this).attr("href")).offset().top - 190;
+    var position = $($(this).attr("href")).offset().top - 246;
     $("html, body").animate({scrollTop: position}, 400);
     $("nav2 ul li a").parent().removeClass("active");
     $(this).parent().addClass("active");
