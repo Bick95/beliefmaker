@@ -1,7 +1,7 @@
 ---
-title: How to - Getting started
+title: How To - Getting started
 layout: default
 filename: how_to
 --- 
-# How to - Getting started
+# How To - Getting started
 
