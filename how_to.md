@@ -62,7 +62,16 @@ Next, the individual parts developed above have to be compiled to a whole so-cal
 For constructing the Kripke model specification describing your usecase, you have to assemble the real world specification **_real_world_**, the set of accessibility realtions **_R_**, and the valuation function **_V_** into a datastructure following the syntax of a dictionary implemented in the Python programming language. For that, put all parts specified above in curly braces `{...}` and separate the different parts by commas. Following our running example, this results in the following:
 
 ```python
-{'real_world': 1, 'R': {'a': [[1, 2], [1, 3], [2, 2], [3, 3], [2, 3], [3, 2]], 'b': [[1, 3], [2, 3], [3, 3]], 'c': [[1, 1], [2, 2], [3, 3], [3, 1], [1, 3]]}, 'V': {'q': [3], 'p': [2, 3], 'r': [1, 2, 3]}}
+{'real_world': 1, 
+ 'R': {'a': [[1, 2], [1, 3], [2, 2], [3, 3], [2, 3], [3, 2]], 
+       'b': [[1, 3], [2, 3], [3, 3]], 
+       'c': [[1, 1], [2, 2], [3, 3], [3, 1], [1, 3]]
+       }, 
+ 'V': {'q': [3], 
+       'p': [2, 3], 
+       'r': [1, 2, 3]
+       }
+}
 ```
 
 This dictionary can then be passed into the text field labeled **_Model_** on the start page of the solver. 
