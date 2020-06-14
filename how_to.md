@@ -93,9 +93,9 @@ To account for the case that ambiguous formulas are provided to the system, the 
 
 ### Connectives
 
-The list of connectives available to extend the complexity of the queried **_Formula to be established_**" encompasses the following elements: 
+The list of connectives available to extend the complexity of the queried **_Formula to be established_**" from simple propoositional atoms **_a_** and **_b_** to more complex formulas encompasses the following elements: 
 
-* Negation: `~`; Example: `~p`
+* Negation: `~`; Example: `~a`
 * Conjunction: `&`; Example: `a & b`
 * Disjunction:  `|`; Example: `a | b` 
 * Implication: `->`; Example: `a -> b`
