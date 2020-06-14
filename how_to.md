@@ -19,7 +19,7 @@ Sounds eactly like what you need? Here you go! This [Solver](https://bick95.pyth
 
 ### Implicit possible world states
 
-First, implicitly define which worlds you want to consider in your mini-universe and label them 1 through **_n_**, where **_n_** stards for the maximal number of possible worlds, or world states, that are allowed in youe mini universe, i.e. the model you are going to construct. 
+First, implicitly define which worlds you want to consider in your mini-universe and label them 1 through **_n_**, where **_n_** stards for the maximal number of possible worlds, or world states more specifically, that are allowed in youe mini universe, i.e. the model you are going to construct. 
 
 ### Real world
 
@@ -44,7 +44,7 @@ In this case, establish a so-called accessibility relation for agent **_a_** fro
 
 ### Valuation functions
 
-Finally, it must be specified which formulas hold at which state. For example let **_p_** stand for **_Corona is caused by 5G_**. Then, in some possible world states, **_p_** may be true, while in other's it isn't. Possible world states correspond to states of the world one could imagine being true. If **_p_** is true at the possible worlds 2 and 3, then indicate this by writing `'p': [2, 3]`. The full set of such evaluation functions is the specified as set **_V_**. **_V_** may look as follows:
+Finally, it must be specified which formulas hold at which state. For example let **_p_** stand for **_Corona is caused by 5G_**. Then, in some possible world states, **_p_** may be true, while in other's it isn't. Possible world states correspond to states of the world one could imagine being true. If **_p_** is true at the possible world states 2 and 3, then indicate this by writing `'p': [2, 3]`. The full set of such evaluation functions is the specified as set **_V_**. **_V_** may look as follows:
 
 ```python
 'V': {'q': [3], 
