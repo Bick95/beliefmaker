@@ -49,6 +49,10 @@ Also, useful and suggestive error messages are shown when the user enters invali
 
 The source code to the repository containing the website is available on request. 
 
+## Project Website - Documentation
+
+The part of the website called _Documentation_ refers to the part of the website you are currently exploring. The documentation is deployed on [GitHub Pages](https://pages.github.com/) and uses an adapted version of the [Leap Day](https://github.com/pages-themes/leap-day) style template. The adaptions encompass the integration of the global navigation bar at the top of the page allowing for simple navigation and a more uniform look of all parts of the overall website encompassing both the solver and the documentation. 
+
 ## Plotting Software
 
 For visualizing Kripke models, a custom plotting software has been developed.
