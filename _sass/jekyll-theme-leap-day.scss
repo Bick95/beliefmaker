@@ -8,8 +8,7 @@ by Matt Graham
 @import "rouge-base16-dark";
 
 html {
-  --top-spacing: 200px;
-  // scroll-padding-top: var(--top-spacing);
+  scroll-padding-top: 70px; /* height of sticky header */
 }
 
 body {
