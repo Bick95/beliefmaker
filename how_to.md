@@ -44,7 +44,7 @@ In this case, establish a so-called accessibility relation for agent **_a_** fro
 
 ### Valuation functions
 
-Finally, it must be specified which formulas hold at which state. For example let **_p_** stand for **_Corona is caused by 5G_**. Then, in some possible world states, **_p_** may be true, while in other's it isn't. Possible world states correspond to states of the world one could imagine being true. If **_p_** is true at the possible world states 2 and 3, then indicate this by writing `'p': [2, 3]`. The full set of such evaluation functions is the specified as set **_V_**. **_V_** may look as follows:
+Finally, it must be specified which formulas hold at which state. For example let **_p_** stand for **_Corona is caused by 5G_**. Then, in some possible world states, **_p_** may be true, while in other's it isn't. Possible world states correspond to states of the world one could imagine being true. If **_p_** is true at the possible world states 2 and 3, then indicate this by writing `'p': [2, 3]`. The full set of such valuation functions is the specified as set **_V_**. **_V_** may look as follows:
 
 ```python
 'V': {'q': [3], 
