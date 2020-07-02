@@ -11,7 +11,7 @@ Like knowledge, belief can be modelled using epistemic logic, which can then be 
 * $$R_i$$ is the accessibility relation of agent $$i$$, a subset of the Cartesian product $$S$$ $$\times$$ $$S$$;
 * $$v$$: $$S→ (P → \{t,f\})$$
 
-When an agent can access a state $$t$$ from a state $$s$$ (i.e. $$(s,t)\in R$$), this means that the agent holds that state for possible. Using Kripke semantics, then, we can define belief as follows: in a given state, an agent believes in a formula iff that formula is true in all states that the agent holds for possible. Formally, $$(M,s) \models B_i ϕ$$ iff $$(M,t) \models ϕ$$ for all $$t$$ such that $$(s,t) \in R_i$$.
+When an agent can access a state $$t$$ from a state $$s$$ (i.e. $$(s,t)\in R$$), this means that the agent holds that state for possible. Using Kripke semantics, then, we can define belief as follows: in a given state, an agent _believes_ in a formula iff that formula is true in all states that the agent holds for possible. Formally, $$(M,s) \models B_i ϕ$$ iff $$(M,t) \models ϕ$$ for all $$t$$ such that $$(s,t) \in R_i$$.
 
 The project _beliefmaker_ is based on the system $$KD45_{(m)}$$, a variant of epistemic logic which is particularly well-suited to model belief. This system is based on the following axioms (see e.g. Meyer &amp; van der Hoek, 1995):
 * $$A1$$: All (instances of) propositional tautologies
@@ -41,9 +41,9 @@ Second, a formula $$ϕ$$ is commonly believed in a group iff:
 * Everyone believes that everyone believes that $$ϕ$$ holds, and
 * Everyone believes that everyone believes that everyone believes that $$ϕ$$ holds, etc., ad infinitum.
 
-Thus, every formula which is commonly believed is also generally believed, but not vice versa. For example, suppose every member of a group believes that COVID-19 is caused by 5G internet towers, but one member still holds it for possible that another member holds it for possible that this is not the case. Then although the group _generally_ believes that 5G causes COVID-19, the group does not _commonly_ believe that this is the case.
+Thus, every formula which is commonly believed is also generally believed, but not vice versa. For example, suppose every member of a group believes that COVID-19 is caused by 5G internet towers, but one member still holds it for possible that another member holds it for possible that this is not the case. Then although the group generally believes that 5G causes COVID-19, the group does not commonly believe that this is the case.
 
-In Kripke semantics, a formula is commonly believed in a specific state $$s$$ iff that formula holds true in all states that are accessible from $$s$$, by any number of agents, in any positive number of steps. Formally:
+In Kripke semantics, a formula is _commonly_ believed in a specific state $$s$$ iff that formula holds true in all states that are accessible from $$s$$, by any number of agents, in any positive number of steps. Formally:
 
 $$(M, s) \models Cϕ$$  iff $$(M, t) \models ϕ$$ for all $$t$$ such that $$(s, t)$$ is in the transitive closure of the union of the accessibility relations $$R$$.
 

@@ -3,37 +3,40 @@ title: How To - Getting started
 layout: default
 filename: how_to
 --- 
-# How To - Getting started
+# How to use
 
 This is a quick introduction into the usage of our [Solver](https://bick95.pythonanywhere.com/). 
 
 ## What is it about? 
 
-Suppose you are with friends and having a discussion. You start wondering whom you would have to exclude from your discussion round in order to be left with only like minded people. For example with those that do not share the point of view that the Corona crisis was caused by radio waves emitted by 5G antennas. 
-
-Suppose you have kept track of the circle of discussion members you commonly engage with, including their beliefs, and wanted to feed the data into a simple tool that allows you to commpute with ease which people you have to remove from your circle of discussion members to establish common belief in your group. Or at least to have everyone believing in the same world fact. 
-
-Sounds eactly like what you need? Here you go! This [Solver](https://bick95.pythonanywhere.com/) implements the solution to vour problem at hand. 
+One way to establish shared belief in a group is to exclude (potential) dissidents.
+The project [_beliefmaker_](https://bick95.pythonanywhere.com/) uses epistemic logic to illustrate how general or common belief in a group can change as a function of removing group members.
+In particular, the question it answers is: how can we, by removing a minimal number of agents, establish a formula as general or common belief, in a given world, in a given model?
 
 ## How to use it?
 
-### Implicit possible world states
+The input to the system consists of three parts: a pointed Kripke model, a formula, and a requested type of belief.
 
-First, implicitly define which worlds you want to consider in your mini-universe and label them 1 through **_n_**, where **_n_** stards for the maximal number of possible worlds, or world states more specifically, that are allowed in youe mini universe, i.e. the model you are going to construct. 
+### Kripke model
 
-### Real world
+The input model consists of the essential parts of a pointed $$KD45_{(m)}$$ Kripke model (see the [Logical Background](https://bick95.github.io/beliefmaker/logical_background) section for more information on such models).
+These are the model's point (i.e. the "real world"), the accessibility relations, and the valuation.
+The agents and the propositions are deduced from these parts of the model.
+There are few restrictions on the naming conventions: any string can be used as an agent's name, and any alphanumeric string can be used as a proposition.
+However, states have to be integers, reflecting the convention of naming them $s_1$, $s_2$, etc.
 
-From the set of **_n_** worlds, choose a real world. For example:
+#### Real world
+
+The real world is the first part of the input. It can be defined as follows:
 
 ```python
 'real_world': 1
 ```
 
-### Accessibility relations
+#### Accessibility relations
 
-Next, specify which person, or agent, considers which world states possible. Indicate, for each state and each state, which other world states a person considers consistent with its beliefs valid at a given state. 
-Intuition: Imagine that person, or **agent**, **_a_** is considered being at world 1 and considers it possible that world 2 is also possible, since facts valid at world 2 do not contradict with the agent's beliefs at world 1. 
-In this case, establish a so-called accessibility relation for agent **_a_** from world 1 to 2, which is done by specifying `'a': [[1, 2],...]`, where `...` stands for possibly more accessibility relations of the form **_[world_i, world_j]_** for agent **_a_**. Given our running example, and doing this for all agents **_a_**, **_b_**, and **_c_**, for the worlds 1, 2, and 3, this may result in the following set of directed accessibility relations **_R_** (depending on your constructed world model):
+Next, specify the model's accessibility relations. These are implemented as dictionaries, where the keys are the names of the agents, and the values are lists of lists of length 2.
+For example, in a model with $$A = \{a,b,c\}$$ and $$S$$ = $$\{s_1,s_2,s_3\}$$, this may result in the following set of directed accessibility relations $$R$$ (depending on the constructed world model):
 
 ```python
 'R': {'a': [[1, 2], [1, 3], [2, 2], [3, 3], [2, 3], [3, 2]], 
@@ -42,9 +45,10 @@ In this case, establish a so-called accessibility relation for agent **_a_** fro
       }
 ```
 
-### Valuation functions
+#### Valuation functions
 
-Finally, it must be specified which formulas hold at which state. For example let **_p_** stand for **_Corona is caused by 5G_**. Then, in some possible world states, **_p_** may be true, while in other's it isn't. Possible world states correspond to states of the world one could imagine being true. If **_p_** is true at the possible world states 2 and 3, then indicate this by writing `'p': [2, 3]`. The full set of such valuation functions is the specified as set **_V_**. **_V_** may look as follows:
+Finally, it must be specified which formulas hold at which state. For example, let the set of propositions be $$P = \{p,q,r\}$$.
+Now, if $$p$$ is true in states $$s_2$$ and $$s_3$$, but false in all other states, this can be indicated by writing `'p': [2, 3]`. The full set of such valuation functions is the specified as set $$V$$, as follows:
 
 ```python
 'V': {'q': [3], 
@@ -53,13 +57,9 @@ Finally, it must be specified which formulas hold at which state. For example le
       }
 ```
 
-### Putting it all together
+#### Putting it all together
 
-Next, the individual parts developed above have to be compiled to a whole so-called Kripke Model. 
-
-#### Constructing the full model specification
-
-For constructing the Kripke model specification describing your usecase, you have to assemble the real world specification **_real_world_**, the set of accessibility realtions **_R_**, and the valuation function **_V_** into a datastructure following the syntax of a dictionary implemented in the Python programming language. For that, put all parts specified above in curly braces `{...}` and separate the different parts by commas. Following our running example, this results in the following:
+In order to construct the Kripke model specification, assemble the real world specification, the set of accessibility realtions, and the valuation function into a datastructure following the syntax of a dictionary implemented in the Python programming language. For that, put all the different parts specified above in curly braces `{...}` and separate them by commas. Following our running example, this results in the following input:
 
 ```python
 {'real_world': 1, 
@@ -74,26 +74,20 @@ For constructing the Kripke model specification describing your usecase, you hav
 }
 ```
 
-This dictionary can then be passed into the text field labeled **_Model_** on the start page of the solver. 
+This dictionary can then be written in the text field labeled **_Model_** on the start page of the solver. 
 
-#### Mind **_KD45_m_** constraints
+#### Note: Mind $$KD45_{(m)}$$ constraints
 
-When constructing model, please make sure the constructed model follows the constraints imposed on valid **_KD45_m_** Kripke models, as described in section [Logical Background](https://bick95.github.io/beliefmaker/logical_background). If not, you will be pointed toward which constraints your model currently violates via error messages clearly indicated in red at the top of the page, when clicking on `Solve` or `Solve & Visualize`. 
+When constructing a model, please make sure it follows the constraints imposed on valid $$KD45_{(m)}$$ Kripke models, as described in the [Logical Background](https://bick95.github.io/beliefmaker/logical_background) section. Otherwise, if you click on `Solve` or `Solve & Visualize`, you will be pointed toward which constraints your model currently violates via error messages clearly indicated in red at the top of the page. 
 
-### Querying the system
+### Query formula
 
-Still remember the task we aimed for achieving? The intention was to find out which agent to remove from your model to make sure only people sharing your beliefs (in the real world) are left in the circle of your close friends. Suppose you want to exclude peple from your system that do not believe **_p_**. That is, you want to restrict your system to a configuration where everyone who is present at the real world beliefs that **_p_**. 
-Whatever formula it is ypu want your system to be true in the real world, type it into the text box labeled **_Formula to be established_**. Make sure that the formula is satisfiable. Otherwise, an error message will point you to the respective problem encountered when evaluating the formula. 
+The formula to be established as shared belief can be typed into the indicated textbox. Make sure that the formula's syntax is in order and that all propositions occurring in it also occur in the model. Otherwise, an error message will point you to the respective problem encountered when evaluating the formula. 
+Simple and complex formulas are both accpeted, but modal operators are not. For example, $$p \rightarrow (q \wedge r)$$ is allowed, but $B_i p$ is not.
 
-If it is only intended to establish that everyone in the computed solution model believes that the **_Formula to be established_** holds imn the real world, choose the option "General belief". If you want to ensure that "Everyone knows that everyone knows that everyone knows ... that **_Formula to be established_**", choose the alternative option "Common belief". 
+#### Connectives
 
-Afterwards, click on `Solve` or `Solve & Visualize`, depending on whether you only want a solution to be computed and explained or whether you wish to also obtain a visualization of the involved models. 
-
-To account for the case that ambiguous formulas are provided to the system, the system will also print the disambiguated vriant of the formula that it has evaluated as a **_Formula to be established_**". 
-
-### Connectives
-
-The list of connectives available to extend the complexity of the queried **_Formula to be established_** from simple propoositional atoms **_a_** and **_b_** to more complex formulas encompasses the following elements: 
+The full list of connectives available to extend the complexity of the queried **_Formula to be established_** is as follows: 
 
 * Negation: `~`; Example: `~a`
 * Conjunction: `&`; Example: `a & b`
@@ -101,4 +95,13 @@ The list of connectives available to extend the complexity of the queried **_For
 * Implication: `->`; Example: `a -> b`
 * Bidirectional Implication: `<->`; Example: `a <-> b`
 
-Formulas valid in propositional logic and constructed from this set of connectives can then be queried. 
+Please do not forget to write parentheses in order to disambiguate your formula.
+In case the formula does end up ambiguous, the system will also print the disambiguated variant of the formula that it has evaluated as a **_Formula to be established_**". 
+
+### Type of belief
+
+If it is only intended to establish that everyone in the computed solution model believes that the **_Formula to be established_** holds in the real world, choose the option "General belief". If you want to ensure that this formula is commonly believed, choose the alternative option "Common belief". 
+
+Afterwards, click on `Solve` or `Solve & Visualize`, depending on whether you only want a solution to be computed and explained or whether you wish to also obtain a visualization of the involved models.
+
+The resulting model, as well as the agents to be removed, will then be printed on the right.
