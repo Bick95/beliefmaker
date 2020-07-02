@@ -3,9 +3,9 @@ title: Logical Background
 layout: default
 filename: logical_background
 --- 
-# Logical background
+# Logical Background
 
-## Knowledge and belief
+## Knowledge and Belief
 Like knowledge, belief can be modelled using epistemic logic, which can then be called doxastic ("belief-related") logic. In particular, we can represent real-life situations using Kripke models $$M =$$ $$<$$$$S,R_1, ..., R_m,v$$$$>$$, where:
 * $$S$$ is a non-empty set of states;
 * $$R_i$$ is the accessibility relation of agent $$i$$, a subset of the Cartesian product $$S$$ $$\times$$ $$S$$;
@@ -21,14 +21,14 @@ The project _beliefmaker_ is based on the system $$KD45_{(m)}$$, a variant of ep
 * $$D$$: $$\neg B_i\bot$$
 
 Axioms $$A3$$, $$A4$$, and $$D$$ have reasonably intuitive interpretations. First, $$A4$$ implies that if an agent believes something, they must believe that they believe it. $$A5$$ implies that if an agent does not believe something, they must believe that they don't believe it. And finally, axiom $$D$$ implies that for every agent, there will always be a world that is in line with their beliefs (and by definition, in that world, $$\bot$$ does not hold). Each of these three axioms also restrict the class of legal $$S5$$-models by posing requirements on the accessibility relations. These requirements are as follows, for each relation $$R$$:
-* $$R$$ must be transitive (due to axiom $$A4$$), meaning that for all states $$s$$, $$t$$, $$u$$: if $$(s,t) \ in R$$ and $$(t,u) \in R$$, then $$(s,u) \in R$$;
-* $$R$$ must be euclidean (due to axiom $$A5$$), meaning that for all states $$s$$, $$t$$, $$u$$: if $$(s,t) \ in R$$ and $$(s,u) \in R$$, then $$(t,u) \in R$$ (and $$(u,t) \in R$$);
+* $$R$$ must be transitive (due to axiom $$A4$$), meaning that for all states $$s$$, $$t$$, $$u$$: if $$(s,t) \in R$$ and $$(t,u) \in R$$, then $$(s,u) \in R$$;
+* $$R$$ must be euclidean (due to axiom $$A5$$), meaning that for all states $$s$$, $$t$$, $$u$$: if $$(s,t) \in R$$ and $$(s,u) \in R$$, then $$(t,u) \in R$$ (and $$(u,t) \in R$$);
 * $$R$$ must be serial (due to axiom $$D$$), meaning that for all states $$s$$, there is at least one state $$t$$ such that $$(s,t) \in R$$.
 
 The system $$KD45_{(m)}$$ is very similar to the system $$S5_{(m)}$$, which is often used to model knowledge. However, there is one crucial difference, reflecting the intuitive difference between knowledge and belief: when an agent _knows_ that a formula $$\phi$$ is true, then $$\phi$$ has to be true; but when an agent merely _believes_ $$\phi$$, then $$\phi$$ does not have to be true (Hintakka, 1962). This means the requirements of belief are less strong than those of knowledge. This is reflected in axiom $$D$$ replacing $$S5$$'s axiom $$A3$$ ($$K_i ϕ → ϕ$$), which requires known facts to be true and hence requires $$R$$ to be not just serial, but reflexive (Meyer &amp; van der Hoek, 1995).
 
 
-## General belief and common belief
+## General and Common Belief
 
 There are two major notions of shared belief in a group, both of which are formalized by Kraus and Lehmann (1988), who adapt Lewis’ (2002) analysis in a doxastic context. First, a formula is _generally_ believed in a group of agents iff it is believed by every agent in that group. This can be seen as a straightforward extension of the definition of belief in one agent. Formally:
 
