@@ -6,44 +6,45 @@ filename: logical_background
 # Logical background
 
 ## Knowledge and belief
-In epistemic logic, both knowledge and belief are expressed in terms of Kripke models $$M =$$ $$<$$$$S,R,v$$$$>$$, where:
+Like knowledge, belief can be modelled using epistemic logic, which can then be called doxastic ("belief-related") logic. In particular, we can represent real-life situations using Kripke models $$M =$$ $$<$$$$S,R_1, ..., R_m,v$$$$>$$, where:
 * $$S$$ is a non-empty set of states;
-* $$R$$ is a subset of the Cartesian product of $$S$$ $$\times$$ $$S$$;
+* $$R_i$$ is the accessibility relation of agent $$i$$, a subset of the Cartesian product $$S$$ $$\times$$ $$S$$;
 * $$v$$: $$S→ (P → \{t,f\})$$
 
-The main difference between knowledge and belief is that when an agent _knows_ $$p$$, then $$p$$ has to be true, but when an agent _believes_ $$p$$, then $$p$$ does not have to be true (Hintakka, 1962). This is reflected in the axioms of the system $$S5$$, representing the properties of knowledge, the third of which ($$K_i ϕ → ϕ$$) states that known facts are true (Meyer &amp; van der Hoek, 1995).
+When an agent can access a state $$t$$ from a state $$s$$ (i.e. $$(s,t)\in R$$), this means that the agent holds that state for possible. Using Kripke semantics, then, we can define belief as follows: in a given state, an agent believes in a formula iff that formula is true in all states that the agent holds for possible. Formally, $$(M,s) \models B_i ϕ$$ iff $$(M,t) \models ϕ$$ for all $$t$$ such that $$(s,t) \in R_i$$.
 
-Instead of $$S5$$, the project _beliefmaker_ makes of the system $$KD45$$, which can be seen as a doxastic (belief-oriented) counterpart to the epistemic (knowledge-oriented) $$S5$$. Since the fact that an agent believes $$p$$ does not mean that $$p$$ has to be true, $$S5$$’s third axiom is changed in $$KD45$$ to simply state that a knowledge base cannot be contradictory ($$\neg B_i\bot$$). Except for the third axiom, $$KD45$$ shares its axioms with $$S5$$ (the $$K$$ in $$S5$$’s axiom is here replaced by a $$B$$, indicating belief). $$KD45$$’s axioms are listed below:
-* $$A1$$: All instances of propositional tautologies
+The project _beliefmaker_ is based on the system $$KD45_{(m)}$$, a variant of epistemic logic which is particularly well-suited to model belief. This system is based on the following axioms (see e.g. Meyer &amp; van der Hoek, 1995):
+* $$A1$$: All (instances of) propositional tautologies
 * $$A2$$: $$(B_i ϕ \wedge B_i (ϕ → ψ) → B_i ψ$$
-* $$D$$: $$\neg B_i\bot$$ (a knowledge base cannot be inconsistent)
-* $$A4$$: $$B_i ϕ → B_iB_i ϕ$$ (an agent believes that they believe something)
-* $$A5$$: $$\neg B_i ϕ → B_i \neg B_i ϕ$$ (an agent believes that they don’t believe something)
+* $$A4$$: $$B_i ϕ → B_iB_i ϕ$$
+* $$A5$$: $$\neg B_i ϕ → B_i \neg B_i ϕ$$
+* $$D$$: $$\neg B_i\bot$$
 
-In $$KD45$$, we say that an agent in a specific world believes a formula $$ϕ$$ if and only if that formula is true in all worlds that the agent can access from that specific world. Formally, $$(M,s) \models B_i ϕ$$ iff $$(M,t) \models ϕ$$ for all $$t$$ such that $$(s,t) \in R_i$$. In this definition, replacing $$B$$ with $$K$$ would give us the definition of the agent's knowledge of a formula instead. Thus, we can distinguish between knowledge and belief only relative to a real world, which has to be defined a priori.
+Axioms $$A3$$, $$A4$$, and $$D$$ have reasonably intuitive interpretations. First, $$A4$$ implies that if an agent believes something, they must believe that they believe it. $$A5$$ implies that if an agent does not believe something, they must believe that they don't believe it. And finally, axiom $$D$$ implies that for every agent, there will always be a world that is in line with their beliefs (and by definition, in that world, $$\bot$$ does not hold). Each of these three axioms also restrict the class of legal $$S5$$-models by posing requirements on the accessibility relations. These requirements are as follows, for each relation $$R$$:
+* $$R$$ must be transitive (due to axiom $$A4$$), meaning that for all states $$s$$, $$t$$, $$u$$: if $$(s,t) \ in R$$ and $$(t,u) \in R$$, then $$(s,u) \in R$$;
+* $$R$$ must be euclidean (due to axiom $$A5$$), meaning that for all states $$s$$, $$t$$, $$u$$: if $$(s,t) \ in R$$ and $$(s,u) \in R$$, then $$(t,u) \in R$$ (and $$(u,t) \in R$$);
+* $$R$$ must be serial (due to axiom $$D$$), meaning that for all states $$s$$, there is at least one state $$t$$ such that $$(s,t) \in R$$.
 
-When an agent can access a state $$s$$, this means that the agent holds that state for possible. For example, take two states $$s$$ and $$t$$, let an agent $$a$$ have the accessibility relation $$R_a = \{(s,t), (s,s)\}$$, and let $$p$$ hold at both $$s$$ and $$t$$. Now, from world $$s$$, agent $$a$$ can access both $$t$$ and $$s$$ itself. That means that $$p$$ holds in every world that $$a$$ holds for possible. If now one of $$s$$ or $$t$$ represents the real world, then we could say that $$a$$ _knows_ that $$p$$. However, if the real world is not accessible for $$a$$ (say the real world is some third world $$u$$), then we can only say that $$a$$ _believes_ that $$p$$. Note however that an agent in the real world (here meaning real world in the sense of a practical application, e.g. in the context of a person believing a conspiracy theory) cannot distinguish between knowledge and belief (this will be discussed further in the more philosophically oriented section). In this project, we will focus only on belief, specifically in reference to system $$KD45$$ and corresponding Kripke models.
+The system $$KD45_{(m)}$$ is very similar to the system $$S5_{(m)}$$, which is often used to model knowledge. However, there is one crucial difference, reflecting the intuitive difference between knowledge and belief: when an agent _knows_ that a formula $$\phi$$ is true, then $$\phi$$ has to be true; but when an agent merely _believes_ $$\phi$$, then $$\phi$$ does not have to be true (Hintakka, 1962). This means the requirements of belief are less strong than those of knowledge. This is reflected in axiom $$D$$ replacing $$S5$$'s axiom $$A3$$ ($$K_i ϕ → ϕ$$), which requires known facts to be true and hence requires $$R$$ to be not just serial, but reflexive (Meyer &amp; van der Hoek, 1995).
+
 
 ## General belief and common belief
 
-A sentence is generally believed in a group of agents iff every agent in that group holds the same belief (e.g. "COVID-19 is caused by 5G towers"). This can be seen as a straightforward extension of the definition of belief in one agent. Formally, let $$F ϕ$$ mean „everybody (in that group) believes ϕ“. Then, general belief is defined as:
+There are two major notions of shared belief in a group, both of which are formalized by Kraus and Lehmann (1988), who adapt Lewis’ (2002) analysis in a doxastic context. First, a formula is _generally_ believed in a group of agents iff it is believed by every agent in that group. This can be seen as a straightforward extension of the definition of belief in one agent. Formally:
 
 $$F ϕ = B_1 ϕ \wedge … \wedge B_m ϕ$$ for all agents $$1, ..., m$$.
 
-This means that every agent in the group only holds worlds for possible in which a certain formula, ϕ, holds.
+Here, $$F ϕ$$ can be read as "everyone believes $$ϕ$$".
 
-Common belief is less straightforward. We define common belief by making use of Kraus and Lehmann’s (1988) adaptation of Lewis’ (2002) definition of common knowledge. According to this definition, a formula $$ϕ$$ is commonly believed among a group of people $$P$$ iff:
-* Everyone in $$P$$ believes that $$ϕ$$ holds, and
-* Everyone in $$P$$ believes that everyone in $$P$$ believes that $$ϕ$$ holds, and
-* Everyone in $$P$$ believes that everyone in $$P$$ believes that $$P$$ believes that $$ϕ$$ holds, etc. etc. ad infinitum.
+Second, a formula $$ϕ$$ is commonly believed in a group iff:
+* Everyone (in that group) believes that $$ϕ$$ holds, and
+* Everyone believes that everyone believes that $$ϕ$$ holds, and
+* Everyone believes that everyone believes that everyone believes that $$ϕ$$ holds, etc., ad infinitum.
 
-This means that everybody believes that everybody believes (and so forth) that $$ϕ$$ is true. It also means that every formula which is commonly believed is also generally believed, but not vice versa. For example, if everybody in a group believes that COVID-19 is caused by 5G internet towers, but one member of the group still holds it for possible that another member holds it for possible that it is not the case, then although the group _generally_ believes that 5G causes COVID-19, the group does not _commonly_ believe that this is the case.
+Thus, every formula which is commonly believed is also generally believed, but not vice versa. For example, suppose every member of a group believes that COVID-19 is caused by 5G internet towers, but one member still holds it for possible that another member holds it for possible that this is not the case. Then although the group _generally_ believes that 5G causes COVID-19, the group does not _commonly_ believe that this is the case.
 
-Within Kripke models, a formula is common belief iff, from a specific world within the model, the formula holds true in all worlds that are accessible by any number of agents in any number of steps via accessibility relations. Formally:
+In Kripke semantics, a formula is commonly believed in a specific state $$s$$ iff that formula holds true in all states that are accessible from $$s$$, by any number of agents, in any positive number of steps. Formally:
 
 $$(M, s) \models Cϕ$$  iff $$(M, t) \models ϕ$$ for all $$t$$ such that $$(s, t)$$ is in the transitive closure of the union of the accessibility relations $$R$$.
 
-Our project _beliefmaker_ shows how, by removing agents from a Kripke model, a formula can become generally and/or commonly believed in the given model. This process is outlined using a concrete example, which describes how an initial group with different beliefs regarding COVID-19 can come, upon exclusion of members, to generally/commonly believe in a conspiracy theory.
-
-
-
+Our project _beliefmaker_ shows how, by removing agents from a Kripke model, a formula can become generally and/or commonly believed in that model. This process is outlined using a concrete example, which describes how an initial group whose members have diverse beliefs regarding COVID-19 can come, upon exclusion of members, to generally/commonly believe in a conspiracy theory.
