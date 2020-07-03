@@ -42,6 +42,9 @@ As input to _beliefmaker_, we only need to provide the model's point, its access
 'V': {'p': [1,2,3,4,5,6], 'q': [2,3,4,5], 'r': [2,3,5]}}
 ```
 
+The visualization of the aforementioned model looks as follows:
+
+![img_model_1][model_1]
 
 ### Establishing Shared Belief
 
@@ -74,3 +77,5 @@ Alternatively, it would also suffice to remove Clara from the second model (wher
 ```
 
 If we would instead desire for the group to maintain the general or common belief that Bill Gates uses Covid-19 to reduce the world population, this would also require the removal of both Clara and David. Here, there is no difference between who has to be removed to acquire general or common belief. In both cases, the corresponding Kripke model is the same as the Kripke model corresponding to the first possible way of introducing the common belief that 5G causes Covid-19, as displayed above.
+
+[model_1]: https://github.com/Bick95/beliefmaker/blob/gh-pages/images/example_model_1.png "Visualization of model"
