@@ -3,76 +3,74 @@ title: Example
 layout: default
 filename: example
 --- 
-# Example
+## Example
 
-Consider four people: Anna, Ben, Clara, and David. Suppose that all four believe that the COVID-19 virus does exist. Ben and David also believe that it is being used by the government in order to make people sick, and that it is being caused by 5G towers. Clara holds it for possible that the government uses COVID-19 to make people sick, but not that 5G towers are causing it. Anna, on the other hand, believes that the government is using the COVID-19 to make people sick, and holds it for possible, that it might be caused by 5G towers. 
+### From Situation to Input Model
 
-### First model
+Suppose that the beliefs of a group of four friends, Anna, Ben, Clara and David, can be summarized as follows:
 
-The situation can be represented by the following Kripke model:
+* __Anna__ believes that Covid-19 exists, that 5G causes Covid-19, and that Bill Gates uses Covid-19 to reduce the world population. Furthermore, Anna believes that her beliefs are shared by all other group members. 
+* __Ben__ also believes that Covid-19 exists, that 5G causes Covid-19, and that Bill Gates uses Covid-19 to reduce the world population. However, he believes that Clara and David hold it for possible that 5G does not cause Covid-19, and that Bill Gates does not use Covid-19 to reduce the world population. 
+* __Clara__ believes that Covid-19 exists and that it is caused by 5G. However, Clara believes that Bill Gates does not use Covid-19 to reduce the world population. Furthermore, Clara believes that Anna and David hold it for possible that Bill Gates uses Covid-19 to reduce the world population.
+* Lastly, __David__ believes that Covid-19 exists, but he believes that 5G does not cause Covid-19, and that Bill Gates does not use Covid-19 to reduce the world population.  
 
-Propositions: P =  {p, q, r} with:
-* p: the government is using COVID-19 to make people sick
-* q: COVID-19 is being caused by 5G towers
-* r: COVID-19 exists 
+The statements that the friends do (not) believe in can be represented by the following propositions:
 
-Agents:    A = {a, b, c, d} with:
-* a = Anna
-* b = Ben
-* c = Clara
-* d = David
+* $$p$$: Covid-19 exists
+* $$q$$: 5G causes Covid-19
+* $$r$$: Bill Gates uses Covid-19 to reduce the world population
 
-M = <S, R, v> with:
+Let us assume that in the real world, Covid-19 exists, but it is not caused by 5G, and Bill Gates is not using it to reduce the world population.
+Then, the situation may be captured in a pointed Kripke model $$(M, s_1)$$, where $$A =\{a,b,c,d\}$$, and $$M =$$ $$<$$$$S,R,v$$$$>$$ with:
+* $$S=\{s_1,s_2,s_3,s_4,s_5,s_6\}\notag$$
+* $$R_{a}=\{(s_1,s_2),(s_2,s_2),(s_3,s_3),(s_4,s_5),(s_5,s_5),(s_6,s_6)\}\notag$$
+* $$R_{b}=\{(s_1,s_4),(s_2,s_2),(s_3,s_3),(s_3,s_6),(s_4,s_4),(s_5,s_5),\\  (s_6,s_3),(s_6,s_6)\}\notag$$
+* $$R_{c}=\{(s_1,s_3),(s_2,s_2),(s_3,s_3),(s_4,s_4),(s_5,s_5),(s_6,s_6)\}\notag$$
+* $$R_{d}=\{(s_1,s_1),(s_2,s_2),(s_3,s_3),(s_3,s_6),(s_4,s_4),(s_4,s_5),\\  (s_5,s_4),(s_5,s_5),(s_6,s_3),(s_6,s_6)\}\notag$$
+* $$v(p)=\{s_1,s_2,s_3,s_4,s_5,s_6\}\notag$$
+* $$v(q)=\{s_2,s_3,s_4,s_5\}\notag$$
+* $$v(r)=\{s_2,s_3,s_5\}\notag$$
 
-* States: S = {1, 2, 3}
-* Relations:
-R_a = {(1, 2), (1, 3), (2, 2), (3, 3), (2, 3), (3, 2)}
-R_b = {(1, 3), (2, 3), (3, 3)}
-R_c = {(1, 1), (2, 2), (3, 3), (1, 2), (2, 1)}
-R_d = {(1, 3), (2, 2), (3, 3), (2, 3)}
-* Valuation:
-v(1) = {r}
-v(2) = {p, r}
-v(3) = {p, q, r}
+As input to _beliefmaker_, we only need to provide the model's point, its accessibility relations and its valuation. This looks as follows:
 
-Real world: 1
+```
+{'real_world': 1,
+'R': {'a': [[1,2],[2,2],[3,3],[4,5],[5,5],[6,6]],
+'b':[[1,4],[2,2],[3,3],[3,6],[4,4],[5,5],[6,3],[6,6]],
+'c':[[1,3],[2,2],[3,3],[4,4],[5,5],[6,6]],
+'d':[[1,1],[2,2],[3,3],[3,6],[4,4],[4,5],[5,4],[5,5],[6,3],[6,6]]},
+'V': {'p': [1,2,3,4,5,6], 'q': [2,3,4,5], 'r': [2,3,5]}}
+```
 
-We can see that in the real world, it is common belief that COVID-19 exists, but it is neither common belief that the government uses COVID-19 to make people sick, nor that 5G towers cause COVID-19. 
-We can see that it is not common belief that COVID-19 is being used by the government to make people sick, because Clara holds it for possible that this is not the case. Formally, agent c can access world 1 (the real world), where v(1)(p) = f. Since in world 1, also q does not hold, it is also not common belief that COVID-19 is caused by 5G.
 
-### Second model
+### Establishing Shared Belief
 
-Now, imagine that Clara is being cut out of the group, possibly due to her not believing (although certainly holding for possible) that the government is behind the virus. This would result in a new Kripke model:
+In the above model, it is already generally and commonly believed that Covid-19 exists, since all group members believe that Covid-19 exists, and all members do not hold it for possible that any member holds it for possible that Covid-19 does not exist. However, we can see that in the group at this point, there is no general or common belief that 5G causes Covid-19, because David believes that it is not. Now, suppose that David is being excluded from the group (possibly due to his position as a doubter). This will lead us to a new, restricted model: 
 
-M = <S, R, v> with:
-* States: S = {1, 2, 3}
-* Relations:
-R_a = {(1, 2), (1, 3), (2, 2), (3, 3), (2, 3), (3, 2)}
-R_b = {(1, 3), (2, 3), (3, 3)}
-R_d = {(1, 3), (2, 2), (3, 3), (2, 3)}
-* Valuation:
-v(1) = {r}
-v(2) = {p, r}
-v(3) = {p, q, r}
+```
+{'real_world': 1,
+'R': {'a': [[1, 2], [2, 2], [3, 3], [4, 5], [5, 5], [6, 6]], 
+'b': [[1, 4], [2, 2], [3, 3], [3, 6], [4, 4], [5, 5], [6, 3], [6, 6]], 
+'c': [[1, 3], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]},
+'V': {'p': [1, 2, 3, 4, 5, 6], 'q': [2, 3, 4, 5], 'r': [2, 3, 5]}} 
+```
 
-Real world: 1
+In this new restricted group, consisting only of Anna, Ben, and Clara, it is now _general_ belief that 5G causes Covid-19. This is because none of the remaining members holds it for possible that it is otherwise. However, there is still no _common_ belief that 5G causes Covid-19. This is the case, because Ben believes that Clara holds it for possible that 5G does not cause Covid-19. Therefore, there are now two ways to achieve the common belief that 5G causes Covid-19. Firstly, Ben could also be excluded from the group, leading all remaining group members (Anna and Clara) to believe that 5G causes Covid-19, and to believe that everyone (in the group) believes that 5G causes Covid-19, and so forth, ad infinitum. The corresponding input model is displayed below:
 
-Now, in this smaller social circle, not considering Clara’s perspective, it is common belief that the government is using COVID-19, because there is no one, who does holds the opposite for possible. Formally, none of the agents can access a world, in which p does not hold. However, it is still not common belief that 5G causes COVID-19, because Anna still holds it for possible that it does not. Formally, from world 1, agent a can access world 2, where v(2)(q) = f. 
+```
+{'real_world': 1,
+'R': {'a': [[1, 2], [2, 2], [3, 3], [4, 5], [5, 5], [6, 6]], 
+'c': [[1, 3], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]},
+'V': {'p': [1, 2, 3, 4, 5, 6], 'q': [2, 3, 4, 5], 'r': [2, 3, 5]}}
+```
 
-### Third model
+Alternatively, it would also suffice to remove Clara from the second model (where David was already excluded). Then, since Clara is no longer part of the group anymore, Ben’s belief that Clara holds it for possible that 5G does not cause Covid-19, does not interfere with the proposition to be commonly believed anymore. The respective model is displayed below:  
 
-Imagine now, that Ben and David clash with Anna, and that they are excluding her (or at least her opinions) from their group. Now, only Ben and David remain, which leads us to yet another (smaller) Kripke model:
+```
+{'real_world': 1,
+'R': {'a': [[1, 2], [2, 2], [3, 3], [4, 5], [5, 5], [6, 6]], 
+'b': [[1, 4], [2, 2], [3, 3], [3, 6], [4, 4], [5, 5], [6, 3], [6, 6]]}, 
+'V': {'p': [1, 2, 3, 4, 5, 6], 'q': [2, 3, 4, 5], 'r': [2, 3, 5]}}
+```
 
-M = <S, R, v> with:
-* States: S = {1, 2, 3}
-* Relations:
-R_b = {(1, 3), (2, 3), (3, 3)}
-R_d = {(1, 3), (2, 2), (3, 3), (2, 3)}
-* Valuation:
-v(1) = {r}
-v(2) = {p, r}
-v(3) = {p, q, r}
-
-Real world: 1
-
-In this new, reduced model, we can see that neither of the two agents can access any world, in which q does not hold. This means that by now, in this even tighter social circle, it has become common belief that not only the government uses COVID-19 to make people sick, but also that 5G towers are causing COVID-19.
+If we would instead desire for the group to maintain the general or common belief that Bill Gates uses Covid-19 to reduce the world population, this would also require the removal of both Clara and David. Here, there is no difference between who has to be removed to acquire general or common belief. In both cases, the corresponding Kripke model is the same as the Kripke model corresponding to the first possible way of introducing the common belief that 5G causes Covid-19, as displayed above.
