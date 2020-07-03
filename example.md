@@ -9,9 +9,9 @@ filename: example
 
 Suppose that the beliefs of a group of four friends, Anna, Ben, Clara and David, can be summarized as follows:
 
-* __Anna__ believes that Covid-19 exists, that 5G causes Covid-19, and that Bill Gates uses Covid-19 to reduce the world population. Furthermore, Anna believes that her beliefs are shared by all other group members. 
-* __Ben__ also believes that Covid-19 exists, that 5G causes Covid-19, and that Bill Gates uses Covid-19 to reduce the world population. However, he believes that Clara and David hold it for possible that 5G does not cause Covid-19, and that Bill Gates does not use Covid-19 to reduce the world population. 
-* __Clara__ believes that Covid-19 exists and that it is caused by 5G. However, Clara believes that Bill Gates does not use Covid-19 to reduce the world population. Furthermore, Clara believes that Anna and David hold it for possible that Bill Gates uses Covid-19 to reduce the world population.
+* __Anna__ believes that Covid-19 exists, that 5G causes Covid-19, and that Bill Gates uses Covid-19 to reduce the world population. Furthermore, Anna believes that her beliefs are shared by all other group members.
+* __Ben__ believes that Covid-19 exists and that it is caused by 5G. However, Ben believes that Bill Gates does not use Covid-19 to reduce the world population. Furthermore, Ben believes that Anna and David hold it for possible that Bill Gates uses Covid-19 to reduce the world population.
+* __Clara__ believes that Covid-19 exists, that 5G causes Covid-19, and that Bill Gates uses Covid-19 to reduce the world population. However, she believes that Ben and David hold it for possible that 5G does not cause Covid-19, and that Bill Gates does not use Covid-19 to reduce the world population. 
 * Lastly, __David__ believes that Covid-19 exists, but he believes that 5G does not cause Covid-19, and that Bill Gates does not use Covid-19 to reduce the world population.  
 
 The statements that the friends do (not) believe in can be represented by the following propositions:
