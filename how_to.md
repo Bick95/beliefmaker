@@ -15,7 +15,7 @@ Then, we can establish shared belief in this group by excluding Chris.
 That is, one way to establish shared belief in a group is to exclude (potential) non-believers.
  
 The project [_beliefmaker_](https://bick95.pythonanywhere.com/) uses epistemic logic to illustrate how shared belief in a group can change as a function of removing group members.
-In particular, the question it answers is: how can we, by removing a minimal number of agents, establish a statement as general or common belief, in a given world, in a given model?
+In particular, the question it answers is: how can we, by removing a minimal number of agents, establish a statement as general or common belief in a given world, in a given model?
 
 ## How to use it?
 
@@ -133,17 +133,17 @@ Afterwards, click on `Solve` or `Solve & Visualize`, depending on whether you on
 The resulting model, as well as the agents to be removed, will then be printed on the right:
 
 ```python
-Propositions:	P = {p}
-Agents:		    A = {Alec, Beth}
+Propositions: P = {p}
+Agents:       A = {Alec, Beth}
 
 M = <S, R, v> with:
-States:		    S = {1, 2}
-Relations:	  R_Alec = {(1, 2), (2, 2)}
+States:       S = {1, 2}
+Relations:    R_Alec = {(1, 2), (2, 2)}
               R_Beth = {(1, 2), (2, 2)}
-Valuation:	  v(1) = {}
+Valuation:    v(1) = {}
               v(2) = {p}
 
-Real world:	1
+Real world:   1
 Agent(s) removed: ['Chris']
 ```
 

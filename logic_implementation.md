@@ -6,7 +6,7 @@ filename: logic_implementation
 # Logic Implementation
 
 The system _beliefmaker_ takes as input a pointed $$KD45_{(m)}$$ Kripke model, a non-modal formula, and a type of belief.
-It returns (one of) the smallest set(s) of agents who have to be removed from the model in order to establish the requested formula as the requested type of belief.
+It returns (one of) the smallest subset(s) of agents who have to be removed from the model in order to establish the requested formula as the requested type of belief.
 The system's algorithm is strongly based on the system's logical background, as described [elsewhere](https://bick95.github.io/beliefmaker/logical_background).
 The relevant Python code can be divided in three parts: a representation of models, a representation of formulas, and the algorithm itself (i.e. from input to output).
 In this section, these three parts are discussed in order, and selected parts of the code are shown.
@@ -17,7 +17,7 @@ In this section, these three parts are discussed in order, and selected parts of
 ### Overview
 
 The Kripke model is represented in our system as an object of class `Kripke`.
-Like a Kripke model, this object has variables for the real world, the accessibility relation, the valuation, and the states.
+Like a Kripke model, this object has variables for the real world, the accessibility relations, the valuations, and the states.
 Unlike a Kripke model, the object also has variables for the agents and the propositions that are in the language.
 Only `real_world`, `R`, and `V` are provided by the user. The other variables are inferred:
 
