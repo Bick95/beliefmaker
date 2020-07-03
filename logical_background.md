@@ -45,10 +45,10 @@ Second, a formula $$ϕ$$ is commonly believed in a group iff:
 * Everyone believes that everyone believes that $$ϕ$$ holds, and
 * Everyone believes that everyone believes that everyone believes that $$ϕ$$ holds, etc., ad infinitum.
 
-Thus, every formula which is commonly believed is also generally believed, but not vice versa. For example, suppose every member of a group believes that COVID-19 is caused by 5G internet towers, but one member still holds it for possible that another member holds it for possible that this is not the case. Then although the group generally believes that 5G causes COVID-19, the group does not commonly believe that this is the case.
+Thus, every formula which is commonly believed is also generally believed, but not vice versa. For example, suppose every member of a group believes that Covid-19 is caused by 5G internet towers, but one member still holds it for possible that another member holds it for possible that this is not the case. Then although the group generally believes that 5G causes Covid-19, the group does not commonly believe that this is the case.
 
 In Kripke semantics, a formula is _commonly_ believed in a specific state $$s$$ iff that formula holds true in all states that are accessible from $$s$$, by any number of agents, in any positive number of steps. Formally:
 
 $$(M, s) \models Cϕ$$  iff $$(M, t) \models ϕ$$ for all $$t$$ such that $$(s, t)$$ is in the transitive closure of the union of the accessibility relations $$R$$.
 
-Our project _beliefmaker_ shows how, by removing agents from a pointed Kripke model, a formula can become generally and/or commonly believed in that model. This process is outlined using a concrete example, which describes how an initial group whose members have diverse beliefs regarding COVID-19 can come, upon exclusion of members, to generally/commonly believe in a conspiracy theory.
+Our project _beliefmaker_ shows how, by removing agents from a pointed Kripke model, a formula can become generally and/or commonly believed in that model. This process is outlined using a concrete example, which describes how an initial group whose members have diverse beliefs regarding Covid-19 can come, upon exclusion of members, to generally/commonly believe in a conspiracy theory.
