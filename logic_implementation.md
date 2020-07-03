@@ -9,25 +9,20 @@ The system _beliefmaker_ takes as input a pointed $$KD45_{(m)}$$ Kripke model, a
 It returns (one of) the smallest set(s) of agents who have to be removed from the model in order to establish the requested formula as the requested type of belief.
 The system's algorithm is strongly based on the system's logical background, as described [elsewhere](https://bick95.github.io/beliefmaker/logical_background).
 The relevant Python code can be divided in three parts: a representation of models, a representation of formulas, and the algorithm itself (i.e. from input to output).
-In this section, these three parts are discussed in order.
+In this section, these three parts are discussed in order, and selected parts of the code are shown.
 
 
 ## Kripke Model
 
-The Kripke model is represented in our system as an object of class `Kripke`. 
+### Overview
+
+The Kripke model is represented in our system as an object of class `Kripke`.
+Like a Kripke model, this object has variables for the real world, the accessibility relation, the valuation, and the states.
+Unlike a Kripke model, the object also has variables for the agents and the propositions that are in the language.
+Only `real_world`, `R`, and `V` are provided by the user. The other variables are inferred:
 
 
 ```python
-class Kripke():
-
-  def __init__(self, path=None):
-    if path == None:
-      # Example mode
-      pass
-    else:
-      self.parse_model(path)
-              
-        
   def setup(self, real_world, R, V):
     # Assign model
     self.real_world = real_world
@@ -35,130 +30,11 @@ class Kripke():
     self.V = V
     self.S = self.states()
     self.agents = sorted(set(R.keys()))
-    self.P = sorted(set(V.keys()))
-
-
-  def parse_model(self, path=(path_to_shared + 'model_5.txt'), to_print = False):
-    # Load model from file
-    model = {}
-    try:
-      with open(path) as json_file:
-        model = json.load(json_file)
-    except Exception as e:
-      print('Exception occurred! Updating current model aborted! Exception:', e)
-
-    # Check whether dictionary is empty 
-    if to_print:
-      print('MODEL', model)
-    if not bool(model):
-      raise Warning('Empty model provided. Updating current model aborted!')
-
-    # Assign model
-    self.setup(model['real_world'], model['R'], model['V'])
-
-    # Print loaded model
-    if to_print:
-      print(self)
-
-
-  def assign_model(self, model):
-
-    try:
-      model = eval(model.strip())
-    except:
-      print('Error???')
-      raise ModelParsingError('Model\'s syntax invalid!')
-
-    # Assign model
-    self.setup(model['real_world'], model['R'], model['V'])
-
-    # Print loaded model
-    print(self)
-
-
-  def save(self, name='model_1.txt', path=path_to_shared, overwrite=False):
-    self.save_model(name, path, overwrite)
-
-
-  def save_model(self, name='model_1.txt', path=path_to_shared, overwrite=False):
-    # Choose model name
-    file_name = path + name
-
-    # Check if file name is acceptable or needs refinement
-    if '.' in file_name:
-      # File extension does not need to be added, but divided for further processing
-      parts = file_name.split('.')
-      non_extsn = '.'.join(parts[0:-1])
-      extension = '.' + parts[-1]
-    else:
-      # No file extension provided, so add it to file name structure
-      non_extsn = file_name
-      extension = '.txt'
-
-    if not overwrite and os.path.exists(file_name):
-      # Provided file name exists already: Adapt name to avoid overwriting if wished
-      print('File name exists already! Going to change name.\n' + 
-            '\t To overwrite existing files, save with \'overwrite=True\'.\n')
-
-      pattern = '[\d]+' # Integer search pattern
-      nums = []
-      if re.search(pattern, non_extsn) is not None:
-        # There is an integer in file name. If int==last position, increment & save
-        
-        for catch in re.finditer(pattern, non_extsn):
-          # Retrieve all integer parts from provided file name
-          nums.append(catch) 
-        
-        # Select last detected integer
-        last_num_str = nums[-1].group(0)
-        last_occ_idx = non_extsn.rfind(last_num_str)
-
-        if last_occ_idx+len(last_num_str) < len(non_extsn):
-          # Integer is not in last position of file name, so simply append '_1'
-          file_name = former + '_1' + extension
-        else:
-          # Integer detected in last position of provided file name
-          former = non_extsn[:last_occ_idx]  # Non-integer-part
-          num = int(non_extsn[last_occ_idx : last_occ_idx+len(last_num_str)]) # Integer
-
-          # Construct a candidate file name containing int in last position and 
-          # keep incrementing int until a new file name has been determined
-          file_name = former + str(num) + extension
-          while os.path.exists(file_name):
-            num += 1
-            file_name = former + str(num) + extension
-      else:
-        # Integer is no integer in the file name, so simply append '_1'
-        file_name = former + '_1' + extension
-    else:
-      # If overwrite or file name didn't exist yet, keep provided file name
-      file_name = non_extsn + extension
-
-    # If folder-path doesn't exist yet, create it
-    if not os.path.exists(path):
-      os.mkdirs(path)
-
-    # Define model to be saved
-    model = { 'real_world': self.real_world, 'R': self.R, 'V': self.V }
-
-    # Save model
-    with open(file_name, 'w') as outfile:
-      json.dump(model, outfile)
-
-    print('Saved to:\n', file_name)
-
-
-  def update(self, path):
-    self.parse_model(path)
-
-
-  def __deepcopy__(self, memo):
-    # Create deep copy of the model
-    new_model = Kripke()
-    new_model.setup(self.real_world, copy.deepcopy(self.R, memo), copy.deepcopy(self.V, memo))
-    return new_model
-
     
+    #Propositions
+    self.P = sorted(set(V.keys()))
+    
+  
   def states(self):
     # Derive the states from R and V
     yss = [xs for xss in list(self.R.values()) for xs in xss]
@@ -168,8 +44,17 @@ class Kripke():
     [states.append(x) for x in yss if x not in states]
     
     return states
-    
-    
+  
+```
+
+### Removing agents
+
+The Kripke class contains functions which remove agents from the model.
+Of these `remove_agent` is only used when trying to establish common belief, whereas `remove_non_believers` is always used.
+
+
+```python
+  
   def remove_agent(self, agent):
     # Remove a single agent from the model
     
@@ -188,8 +73,15 @@ class Kripke():
       self.remove_agent(agent)
       
     return non_believers
-    
+```    
 
+### Legality check
+
+The Kripke class supports any kind of epistemic Kripke model; however, _beliefmaker_ is based specifically on $$KD45_{(m)}$$.
+Therefore, the class is equipped with a function which checks whether the model actually satisfies the requirements of this logic.
+Recall that these requirements are seriality, transitivity, and euclideanness; these are checked in order, and if any one of them fails, a sensible error message is returned.
+
+```python
   def is_legal_KD45(self):
     # Check whether the model satisfies seriality, transitivity, and euclideanness
     #   (and so is legal in KD45).
@@ -252,145 +144,19 @@ class Kripke():
     # If we reach this point, no violation was detected, so the model is legal.
     
     return (True, '')
-
-
-  def summarize_model(self):
-    # Return two alternative descriptions of the model's properties: the agents per state-pair in the
-    #   accessibility relations, and the true propositions at each state.
-
-    # Get list of agents per accessibility
-    global_accessibilities = {}
-
-    for agent in self.agents:
-      for agent_acc in self.R[agent]:
-        acc = (agent_acc[0], agent_acc[1])
-        if acc in global_accessibilities:
-          # There esist a record for a given connection already
-          global_accessibilities[acc].append(agent)
-        else:
-          # The first time that an agent maintains the current relation in quest.
-          global_accessibilities[acc] = [agent]
-
-    # Get list of true propositions per state
-    global_valuations = {s: [] for s in self.S}
-    for p in self.P:
-      for state in self.V[p]:
-          global_valuations[state].append(p)
-
-    return global_accessibilities, global_valuations
-  
-
-  def dict_str_representation(self):
-    model = {"real_world": self.real_world, 
-             "R": self.R, 
-             "V": self.V}
-    return str(model)
-
-
-  def __str__(self):
-    # Print current model
-    
-    summary_entities = ''
-    _, valuations = self.summarize_model()
-    
-    # First, print the set of propositions in the language
-    propositions_str = 'Propositions:\tP = {'
-    for i in range(len(self.P)):
-      if i != 0:
-        propositions_str += ', '
-      propositions_str += str(self.P[i])
-    propositions_str += '}\n'
-    summary_entities += propositions_str
-
-    # Second, the set of agents we are concerned with   
-    agents_str = 'Agents:\t\tA = {'
-    for i in range(len(self.agents)):
-      if i != 0:
-        agents_str += ', '
-      agents_str += str(self.agents[i])
-    agents_str += '}\n'
-    summary_entities += agents_str
-    
-    summary_entities += '\nM = <S, R, v> with:\n'
-    
-    # Third, the set of states in the model
-    states_str = 'States:\t\tS = {'
-    for i in range(len(self.S)):
-      if i != 0:
-        states_str += ', '
-      states_str += str(self.S[i])
-    states_str += '}\n'
-    summary_entities += states_str
-
-    # Fourth, the various accessibility relations
-    relations_str = 'Relations:\t'
-    for i in range(len(self.agents)):
-      if i != 0:
-        relations_str += '\t\t\t'
-      relations_str += 'R_' + str(self.agents[i]) + ' = {'
-      for j in range(len(self.R[self.agents[i]])):
-        if j != 0:
-          relations_str += ', '
-        relations_str += '(' + str(self.R[self.agents[i]][j][0]) + ', ' +\
-                         str(self.R[self.agents[i]][j][1]) + ')'
-      relations_str += '}\n'
-    summary_entities += relations_str
-
-    # Fifth, the valuations (as sets of true propositions per state)
-    valuations_str = 'Valuation:\t'
-    for i in range(len(self.S)):
-      if i != 0:
-        valuations_str += '\t\t\t'
-      valuations_str += 'v(' + str(self.S[i]) + ') = {'
-      for j in range(len(valuations[self.S[i]])):
-        if j != 0:
-          valuations_str += ', '
-        valuations_str += str(valuations[self.S[i]][j])
-      valuations_str += '}\n'
-    summary_entities += valuations_str
-    
-    summary_entities += '\nReal world:\t' + str(self.real_world) + '\n'
-    
-    return summary_entities
-
-
-  def visualize(self, html=False):
-    # Visualize the model
-
-    accessibilities, valuations = K.summarize_model()
-
-    print('agents', self.agents)
-    print('states', self.S)
-    print('propositions', self.P)
-    print('accessibilities', accessibilities)
-    print('valuations', valuations)
-
-    g = Graph()
-    g.add_nodes(valuations)
-    g.add_edges(accessibilities)
-    if html:
-      return g.visualize()
-    g.visualize()
 ```
 
 ## Formula
 
+### Overview
+
+Any non-modal well-formed formula can be represented in our system as an object of class `Formula`.
+A formula has two variables: its main connective, and one or two subformulas, each of which is also a formula, or a string representing a proposition.
+In this way, formulas are recursively defined.
+The main connective can be either negation, conjunction, disjunction, implication, bi-implication, or nothing - in which case the formula is atomic, and so the subformula will be a string.
+The recursive nature of the Formula class is especially clear in its `__str__` function:
+
 ```python
-class Formula:
-
-  def __init__(self, formula_str):
-    
-    self.parse_formula(formula_str)
-    
-    # If the main connective is unknown, throw an error
-    if not (self.mc in known_connectives):
-      raise ParsingError('The symbol \'%s\' is unknown to me.' % self.mc)
-      
-          
-  def __eq__(self, other):
-    # For comparing two formulas regardless of whether they're the same object
-    return self.mc == other.mc and self.subf == other.subf
-
 
   def __str__(self):
     # Print current formula
@@ -403,8 +169,15 @@ class Formula:
       
     if self.mc in ['&', '|', '->', '<->']:
       return '(' + str(self.subf[0]) + ' ' + self.mc + ' ' + str(self.subf[1]) + ')'
-    
+```
 
+### Parsing
+
+When parsing a formula from a string, we keep track of and properly handle parentheses.
+However, if the formula is ambiguous, pairs of parentheses are added to disambiguate it, starting from the right side.
+For example, the string `p & q -> r | s` would be parsed as if it said `p & (q -> (r | s))`.
+
+```python
   def parse_formula(self, formula_str):
     # Parse a string into a formula
     
@@ -509,8 +282,15 @@ class Formula:
                                 ', but it is not alphanumeric.' )
     else:
       raise ParsingError('Formula ended with symbol: ' + symbol)
+```
 
 
+### Propositions
+
+The Formula class is equiped with a function `propositions`, which returns a list of all propositions occurring in the formula.
+This list is useful for determining whether the formula is legal in the language implicitly defined by the input model.
+
+```python
   def propositions(self):
     # Return a sorted list of the propositions that occur in the formula
     
@@ -527,9 +307,91 @@ class Formula:
     return sorted(propositions)
 ```
 
+
 ## Main Algorithm
 
+### Overview
+
+The main algorithm on which _beliefmaker_ is based is encapsulated in the `analyse` function.
+This function takes as input a model, a formula or a string to turn into a formula, and a type of belief.
+It then follows the following algorithm:
+
+1. Parse the input string into a formula if need be.
+2. Check if the input model satisfies the requirements of $$KD45_{(m)}$$. If not, return an error; else, continue.
+3. Check if the formula is legal in the language. If not, return an error; else, continue.
+4. Remove all agents from the pointed model who do not believe the formula is true.
+5. Check if there are any agents left. If not, return that there is no solution; else, continue.
+6. At this point, all agents in the model believe that the formula is true; therefore, we have established general belief.
+Thus, if the requested belief type is "general", we are done; else, continue.
+7. Set the counter to $$i = 0$$.
+8. Generate all models with $$i$$ agents removed.
+9. Check if the formula is common belief in any of the resulting pointed models. If it is, return the solutions; else continue.
+10. If $$i < m - 1$$, increase $$i$$ by 1 and return to step 8; else return that there is no solution.
+
+This algorithm is guaranteed to find the least number of agents which need to be removed to establish the requested formula as general or common belief in the input model.
+
+
+```python
+def analyse(M, formula, belief_type = "common"):
+  # Returns a list containing tuples.
+  # Each tuple contains a model M and the agents that were removed from the original pointed model to obtain M.
+  # The number of agents is the same for each tuple.
+  # It corresponds to the minimal number of agents which need to be removed from the original model in order for
+  #   the proposition to be common/general belief in that pointed model.
+  
+  # 1. If we're given a string, first make it a formula
+  if isinstance(formula, str):
+    formula = Formula(formula)
+
+  # 2. Check if the model satisfies the requirements of KD45
+  if M.is_legal_KD45()[0]:
+
+    # 3. Check if all propositions in the formula are in the language
+    for p in formula.propositions():
+      if p not in M.P:
+        raise PropositionError('The proposition %s is not in the language.' % p)
+    
+    # If this is all in order, generate (a) solution(s)
+    # 4. Start by removing all non-believers; they will have to be removed anyhow
+    agents_removed = M.remove_non_believers(formula)
+    result = []
+    
+    # 5. If all agents are non-believers, there is no solution
+    if len(M.agents) == 0:
+      return result
+      
+    if belief_type == "general":
+      # 6. There is always exactly 1 (or no) such solution to the general belief problem, so we can quit now
+      result += [(M, agents_removed)]
+      return result
+    
+    # 7, 10. Else: continue by removing 0 agents, then 1, then 2, etc, until we find a solution
+    for i in range(len(M.agents)):
+    
+      # 8.
+      for xs in sublists(M.agents, i):
+        M2 = copy.deepcopy(M)
+        
+        for x in xs:
+          M2.remove_agent(x)
+        
+        #9. Append every (model, agents) combination that constitutes a solution
+        if common_belief(M2, formula):
+          result.append((M2,agents_removed + xs))
+      
+      if result != []:
+        # Return all solutions in which a minimum number of agents is removed
+        return result
+          
+    return result
+  else:
+    raise ModelError(M.is_legal_KD45()[1])
+```
+
+
 ### Truth Definition of Non-Modal Formulas
+
+Thanks to the recursive character of the Formula class and the immediate accessibility of its main connective, a formula's truth value can be determined in a straightforward way,
 
 ```python
 def check_formula_local(formula, M, state):
@@ -568,10 +430,27 @@ def check_formula_local(formula, M, state):
     return False
 ```
 
-### Transitive Closure
 
+### Belief and Common Belief
+
+The `believes` function can be seen as a definition of the belief-operator $$B_i$$.
+It is used by the Kripke class in the method `remove_non_believers`.
+The `common_belief` function corresponds to the operator $$C$$.
+It is used directly by the `analyse` function, and makes use of the `union` and `t_closure` helper functions.
+Together, these helper functions can construct the transitive closure of the union of the accessibility relations, which is required for evaluating $$C$$.
 
 ```python
+def believes(agent, formula, M):
+  # Checks whether an agent believes a formula in a pointed model
+  
+  for [s, t] in M.R[agent]:
+    if s == M.real_world:
+      if not check_formula_local(formula, M, t):
+          return False
+          
+  return True
+
+
 def t_closure(R):
   # Return transitive closure of the union of a number of accessibility relations
   
@@ -591,7 +470,7 @@ def t_closure(R):
   
   return closure
   
-
+  
 def union(R):
   # Return the union of a number of accessibility relations
 
@@ -606,21 +485,6 @@ def union(R):
   [union.append(x) for x in total if x not in union]
   
   return union
-```
-
-### Belief and Common Belief
-
-
-```python
-def believes(agent, formula, M):
-  # Checks whether an agent believes a formula in a pointed model
-  
-  for [s, t] in M.R[agent]:
-    if s == M.real_world:
-      if not check_formula_local(formula, M, t):
-          return False
-          
-  return True
 
 
 def common_belief(M, formula):
@@ -632,88 +496,4 @@ def common_belief(M, formula):
         return False
 
   return True
-```
-
-### Main Algorithm
-
-
-```python
-def sublists(ls, n):
-  # Returns all sublists of length n (order does not matter)
-  
-  def sublists_rec(ls, selected, n):
-    # Recursively finds and returns a list of requested sublists
-    
-    if n == 0:
-      return [selected]
-    
-    result = []
-    xs = copy.deepcopy(ls)
-    
-    # Popping the elements means we only further consider the part of the list after the selected element
-    for i in range(len(xs)):
-      x = xs.pop(0)
-      result += sublists_rec(xs, selected + [x], n-1)
-    
-    return result
-
-  if n > len(ls):
-    raise ValueError('Requested sublist length exceeds list length (' + str(n) + ' > ' + str(len(ls)) + ')')
-    
-  return sublists_rec(ls, [], n)
-
-
-def analyse(M, formula, belief_type = "common"):
-  # Returns a list containing tuples.
-  # Each tuple contains a model M and the agents that were removed from the original pointed model to obtain M.
-  # The number of agents is the same for each tuple.
-  # It corresponds to the minimal number of agents which need to be removed from the original model in order for
-  #   the proposition to be common/general belief in that pointed model.
-  
-  # If we're given a string, first make it a formula
-  if isinstance(formula, str):
-    formula = Formula(formula)
-
-  # Check if the model satisfies the requirements of KD45
-  if M.is_legal_KD45()[0]:
-
-    # Check if all propositions in the formula are in the language
-    for p in formula.propositions():
-      if p not in M.P:
-        raise PropositionError('The proposition %s is not in the language.' % p)
-    
-    # If this is all in order, generate (a) solution(s)
-    # Start by removing all non-believers; they will have to be removed anyhow
-    agents_removed = M.remove_non_believers(formula)
-    result = []
-    
-    # If all agents are non-believers, there is no solution
-    if len(M.agents) == 0:
-      return result
-      
-    if belief_type == "general":
-      # There is always exactly 1 (or no) such solution to the general belief problem, so we can quit now
-      result += [(M, agents_removed)]
-      return result
-    
-    # Else: continue by removing 0 agents, then 1, then 2, etc, until we find a solution
-    for i in range(len(M.agents)):
-    
-      for xs in sublists(M.agents, i):
-        M2 = copy.deepcopy(M)
-        
-        for x in xs:
-          M2.remove_agent(x)
-        
-        # Append every (model, agents) combination that constitutes a solution
-        if common_belief(M2, formula):
-          result.append((M2,agents_removed + xs))
-      
-      if result != []:
-        # Return all solutions in which a minimum number of agents is removed
-        return result
-          
-    return result
-  else:
-    raise ModelError(M.is_legal_KD45()[1])
 ```
