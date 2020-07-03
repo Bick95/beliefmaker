@@ -11,7 +11,9 @@ Like knowledge, belief can be modelled using epistemic logic, which can then be 
 * $$R_i$$ is the accessibility relation of agent $$i$$, a subset of the Cartesian product $$S$$ $$\times$$ $$S$$;
 * $$v$$: $$S→ (P → \{t,f\})$$
 
-When an agent can access a state $$t$$ from a state $$s$$ (i.e. $$(s,t)\in R$$), this means that the agent holds that state for possible. Using Kripke semantics, then, we can define belief as follows: in a given state, an agent _believes_ in a formula iff that formula is true in all states that the agent holds for possible. Formally, $$(M,s) \models B_i ϕ$$ iff $$(M,t) \models ϕ$$ for all $$t$$ such that $$(s,t) \in R_i$$.
+A pointed Kripke model is a pair $$(M, s)$$ in which a "real world" (state $$s$$) is specified. This state is called the _point_.
+
+The interpretation of the accessibility relations is as follows: when an agent can access a state $$t$$ from a state $$s$$ (i.e. $$(s,t)\in R$$), this means that the agent holds that state for possible. Belief is then defined as follows: in a given state, an agent _believes_ in a formula iff that formula is true in all states that the agent holds for possible. Formally, $$(M,s) \models B_i ϕ$$ iff $$(M,t) \models ϕ$$ for all $$t$$ such that $$(s,t) \in R_i$$.
 
 The project _beliefmaker_ is based on the system $$KD45_{(m)}$$, a variant of epistemic logic which is particularly well-suited to model belief. This system is based on the following axioms (see e.g. Meyer &amp; van der Hoek, 1995):
 * $$A1$$: All (instances of) propositional tautologies
@@ -47,4 +49,4 @@ In Kripke semantics, a formula is _commonly_ believed in a specific state $$s$$ 
 
 $$(M, s) \models Cϕ$$  iff $$(M, t) \models ϕ$$ for all $$t$$ such that $$(s, t)$$ is in the transitive closure of the union of the accessibility relations $$R$$.
 
-Our project _beliefmaker_ shows how, by removing agents from a Kripke model, a formula can become generally and/or commonly believed in that model. This process is outlined using a concrete example, which describes how an initial group whose members have diverse beliefs regarding COVID-19 can come, upon exclusion of members, to generally/commonly believe in a conspiracy theory.
+Our project _beliefmaker_ shows how, by removing agents from a pointed Kripke model, a formula can become generally and/or commonly believed in that model. This process is outlined using a concrete example, which describes how an initial group whose members have diverse beliefs regarding COVID-19 can come, upon exclusion of members, to generally/commonly believe in a conspiracy theory.
