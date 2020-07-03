@@ -20,8 +20,9 @@ The statements that the friends do (not) believe in can be represented by the fo
 * $$q$$: 5G causes Covid-19
 * $$r$$: Bill Gates uses Covid-19 to reduce the world population
 
-Let us assume that in the real world, Covid-19 exists, but it is not caused by 5G, and Bill Gates is not using it to reduce the world population.
-Then, the situation may be captured in a pointed Kripke model $$(M, s_1)$$, where $$A =\{a,b,c,d\}$$, and $$M =$$ $$<$$$$S,R,v$$$$>$$ with:
+Let us assume that Covid-19 exists in the real world, but it is not caused by 5G, and Bill Gates is not using it to reduce the world population.
+Then, the situation may be captured in a pointed Kripke model $$(M, s_1)$$.
+Here $$A =\{a,b,c,d\}$$ is the set of agents, containing Anna, Ben, Clara, and David, and $$M =$$ $$<$$$$S,R,v$$$$>$$ with:
 * $$S=\{s_1,s_2,s_3,s_4,s_5,s_6\}\notag$$
 * $$R_{a}=\{(s_1,s_2),(s_2,s_2),(s_3,s_3),(s_4,s_5),(s_5,s_5),(s_6,s_6)\}\notag$$
 * $$R_{b}=\{(s_1,s_4),(s_2,s_2),(s_3,s_3),(s_3,s_6),(s_4,s_4),(s_5,s_5),\\  (s_6,s_3),(s_6,s_6)\}\notag$$
