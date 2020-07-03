@@ -1,0 +1,102 @@
+{% extends 'solver/main.html' %}
+
+{% block content %}
+
+<!-- <p style="text-align:center;"><mark>Welcome to beliefmaker!</mark></p> -->
+<p> 
+	<i>Welcome to beliefmaker!</i>
+	This is a logic checker, which works as follows. Given a valid KD45 Kripke model and a queried formula, the program calculates how to establish the queried formula as general belief or, alternatively, common belief in the real world by removing the least number of agents from the original model.
+	Solutions to a complete problem specification can be determined by clicking on <mark>Solve</mark>. Clicking on <mark>Solve & Visualize</mark> additionally produces a graphical representation of both a model and a found solution (if applicable) using custom visualization software. For further information and examples, please consult the documentation.
+</p>
+
+{% if completenessWarning %}
+<hr>
+<p style="color:red">{{completenessWarning}}</p>
+<hr>
+{% endif %}
+{% if invalidInput %}
+<hr>
+<p style="color:red">{{invalidInput}}</p>
+<hr>
+{% endif %}
+
+<form id="streamform" action="{% url 'solve' %}" method="POST">
+    {% csrf_token %}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		    <th width="50%"><label for="modelLabel">Model:</label></th>
+		    <th width="50%"><label for="solutionLabel">Solution:</label></th>
+		</tr>
+		<tr>
+		    <td width="50%"><textarea class="form-control" id="modelArea" rows="4" cols="3" type="modelArea" name="model", >{% if model %}{{model}}{% endif %}</textarea></td>
+		    <td width="50%"><textarea readonly class="form-control" id="solutionArea" rows="4" cols="3" type="solutionArea" name="solution", >{% if solution %}{{solution}}{% endif %}</textarea></td>
+		</tr>
+		<tr>
+		    <th width="50%"><label for="modelExplLabel">Model Explanation:</label></th>
+		    <th width="50%"><label for="solutionExplLabel">Solution Explanation:</label></th>
+		</tr>
+		<tr>
+		    <td width="50%"><textarea readonly class="form-control" id="modelExplArea" rows="15" cols="3" type="modelExplArea" name="modelExpl", >{% if modelExpl %}{{modelExpl}}{% endif %}</textarea></td>
+		    <td width="50%"><textarea readonly class="form-control" id="solutionExplArea" rows="15" cols="3" type="solutionExplArea" name="solutionExpl", >{% if solutionExpl %}{{solutionExpl}}{% endif %}</textarea></td>
+		</tr>
+		<tr>
+			<td width="25%"><label for="modelLabel">Formula to be established:</label></td>
+		</tr>
+		<tr>
+			<td width="25%">
+				<input type="formula" name="phi" placeholder="p" value="{% if phi %}{{phi}}{% endif %}"/>
+				<a> as: </a>
+				<!-- Select eval mode --> 
+				<div class="btn-group btn-group-toggle" data-toggle="buttons">
+				  <label class="btn btn-secondary">
+				    <input type="radio" name="options" value="general" id="option2" autocomplete="off" {% if eval_mode == "general" %} checked {% endif %}> General Belief
+				  </label>
+				  <label class="btn btn-secondary active">
+				    <input type="radio" name="options" value="common" id="option1" autocomplete="off" {% if eval_mode == "common" %} checked {% endif %}> Common Belief
+				  </label>
+				</div>
+				<pre class="tab">    </pre>
+				<!-- End select eval mode --> 
+				<input type="submit" value="Solve" name="solveBtn" class="btn btn-primary"/>
+				<button type="submit" value="Visualize" name="visBtn" class="btn btn-primary">Solve & Visualize</button>
+			</td>
+		</tr>
+	</table>
+</form>
+
+{% if graphModel or graphSolution %}
+<hr>
+{% endif %}
+
+
+<table width="100%">
+	<tr>
+		{% if graphModel %}
+		<th width="50%"><label for="modelLabel">Model:</label></th>
+		{% endif %}
+		{% if graphSolution %}
+		<th width="50%"><label for="solutionLabel">Solution:</label></th>
+		{% endif %}
+	    
+	</tr>
+	<tr>
+		{% if graphModel %}
+			<td width="50%">	
+				{{ graphModel|safe }}
+			</td>
+		{% endif %}
+		{% if graphSolution %}
+			<td width="50%">	
+				{{ graphSolution|safe }}
+			</td>
+		{% endif %}
+	</tr>
+
+</table>
+
+
+
+
+
+{% endblock %}
+
