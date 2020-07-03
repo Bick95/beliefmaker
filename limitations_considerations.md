@@ -42,7 +42,7 @@ However, this does not mean that excluding members who do not share the prevalen
 This is because we have yet to distinguish between two types of not believing.
 There is a potentially important difference to be made between a person _believing something not to be the case_ ($$B_i ¬ϕ$$), and a person _not believing something to be the case_ ($$¬B_i ϕ$$).
 While in the former case, an agent does not hold a world in which $$ϕ$$ is true for possible, an agent in the latter case merely holds a world where $$ϕ$$ is false for possible.
-For example, let ϕ be "5G causes Covid-19".
+For example, let $$ϕ$$ be "5G causes Covid-19".
 Now, a group member who maintains the belief $$B_i ¬ϕ$$ does not hold it for possible that 5G is causing Covid-19, while a group member whose belief is expressed by $$¬B_i ϕ$$ merely holds it for possible that Covid-19 is not caused by 5G.
 However, the presence of either of the two agents in a group where otherwise $$ϕ$$ would be generally or commonly believed, would lead to the same result in _beliefmaker_: this agent would prevent $$ϕ$$ from being general or common belief.
 This is because in both cases, the agent holds at least one world for possible in which $$¬ϕ$$ is the case.

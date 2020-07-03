@@ -12,8 +12,7 @@ Like knowledge, belief can be modelled using epistemic logic, which can then be 
 * $$v$$: $$S→ \mathcal{P}(P)$$
 
 Here, $$A$$ is the set of agents, and $$P$$ is the set of propositions in the language.
-
-A pointed Kripke model is a pair $$(M, s)$$ in which a "real world" (state $$s$$) is specified. This state is called the _point_.
+Finally, a pointed Kripke model is a pair $$(M, s)$$ in which a "real world" (state $$s$$) is specified. This state is called the _point_.
 
 The interpretation of the accessibility relations is as follows: when an agent can access a state $$t$$ from a state $$s$$ (i.e. $$(s,t)\in R$$), this means that the agent holds that state for possible. Belief is then defined as follows: in a given state, an agent _believes_ in a formula iff that formula is true in all states that the agent holds for possible. Formally, $$(M,s) \models B_i ϕ$$ iff $$(M,t) \models ϕ$$ for all $$t$$ such that $$(s,t) \in R_i$$.
 

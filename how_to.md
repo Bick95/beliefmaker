@@ -101,7 +101,7 @@ When constructing a model, please make sure it follows the constraints imposed o
 ### Query formula
 
 The formula to be established as shared belief can be typed into the indicated textbox.
-in our case, we want to established 'p', so this step is rather straightforward.
+In our case, we want to established 'p', so this step is rather straightforward.
 In general, make sure that the formula's syntax is in order and that all propositions occurring in it also occur in the model.
 Otherwise, an error message will point you to the respective problem encountered when evaluating the formula.
 Simple and complex formulas are both accpeted, but modal operators are not. For example, $$p \rightarrow (q \wedge r)$$ is allowed, but $B_i p$ is not.
@@ -117,7 +117,7 @@ The full list of connectives available to extend the complexity of the queried *
 * Bidirectional Implication: `<->`; Example: `p <-> q`
 
 Please do not forget to write parentheses in order to disambiguate your formula.
-In case the formula does end up ambiguous, the system will also print the disambiguated variant of the formula that it has evaluated as a **_Formula to be established_**". 
+In case the formula does end up ambiguous, the system will also print the disambiguated variant of the formula that it has evaluated as a **_Formula to be established_**. 
 
 ### Type of belief
 
